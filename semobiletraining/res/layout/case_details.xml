@@ -7,7 +7,7 @@
     android:weightSum="1" >
 
     <LinearLayout
-        android:id="@+id/about_containerG"
+        android:id="@+id/ll_case_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -54,7 +54,7 @@
                     android:id="@+id/line1"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/text_red"
+                    android:background="@color/text"
                     android:gravity="center_horizontal" />
 
                 <LinearLayout
@@ -74,7 +74,7 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:text="Title"
-                            android:textColor="@color/text_red"
+                            android:textColor="@color/text"
                             android:textSize="15sp" />
 
                         <TextView
@@ -99,7 +99,7 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:text="Owner"
-                            android:textColor="@color/text_red"
+                            android:textColor="@color/text"
                             android:textSize="15sp" />
 
                         <TextView
@@ -124,7 +124,7 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:text="Case created"
-                            android:textColor="@color/text_red"
+                            android:textColor="@color/text"
                             android:textSize="15sp" />
 
                         <TextView
@@ -149,7 +149,7 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:text="Case closed"
-                            android:textColor="@color/text_red"
+                            android:textColor="@color/text"
                             android:textSize="15sp" />
 
                         <EditText
@@ -174,7 +174,7 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:text="Status"
-                            android:textColor="@color/text_red"
+                            android:textColor="@color/text"
                             android:textSize="15sp" />
 
                         <TextView
@@ -199,7 +199,7 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:text="Comments"
-                            android:textColor="@color/text_red"
+                            android:textColor="@color/text"
                             android:textSize="15sp" />
 
                         <TextView
@@ -218,7 +218,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="100dp"
-                    android:background="@color/text_red"
+                    android:background="@color/text"
                     android:text="Update case"
                     android:textColor="#ffffff"
                     android:textColorHint="@color/text" />

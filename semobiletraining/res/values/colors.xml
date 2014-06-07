@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- File created by the Android Action Bar Style Generator
+<!--
+     File created by the Android Action Bar Style Generator
 
      Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
@@ -18,16 +19,20 @@
 -->
 
 <resources>
+
     <color name="text">#686868</color>
     <color name="text_btn">#FFFFFF</color>
     <color name="text_error">#FF0000</color>
-    
-      <color name="text_dark">#464648</color>
+    <color name="text_dark">#464648</color>
     
     <color name="bg">#DEDEDE</color>
     <color name="bg_dark">#686868</color>
     <color name="bg_form">#FFFFFF</color>
     
-        <color name="text_red">#d25354</color>
-            <color name="back_ground">#F0F0EF</color>
+    <color name="red_color">#d84437</color>
+    <color name="yellow_color">#f4b400</color>
+    <color name="green_color">#0f9d58</color>
+    
+    <color name="back_ground">#F0F0EF</color>
+
 </resources>

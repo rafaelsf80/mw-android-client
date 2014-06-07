@@ -153,10 +153,12 @@ public class Main extends Activity {
 			public void itemClick(CaseBean bean) {
  				
  				Intent i = new Intent(Main.this, CaseDetails.class);
+ 				i.putExtra("CASEBEAN_ID", bean.getId());
 				i.putExtra("CASEBEAN_TITLE", bean.getTitle());
 				i.putExtra("CASEBEAN_OWNER", bean.getOwner());
 				i.putExtra("CASEBEAN_CREATED", bean.getDateCreated().toStringRfc3339());
 				i.putExtra("CASEBEAN_CLOSED", bean.getDateClosed().toStringRfc3339());
+				i.putExtra("CASEBEAN_STATUS", bean.getStatus());
 				i.putExtra("CASEBEAN_COMMENTS", bean.getComments());	
 				startActivity(i);			
  			}
@@ -172,9 +174,7 @@ public class Main extends Activity {
 				task.setService( mCaseApi );
 				task.setContext( mContext );
 				task.setData(bean);
-				task.execute( new String[]{firstName, lastName, password, segment} );	
- 				
- 					
+				task.execute( new String[]{firstName, lastName, password, segment} );	 					
  			}
  		});
     }

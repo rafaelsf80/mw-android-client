@@ -1,7 +1,7 @@
 package es.rafaelsf80.apps.semobiletraining;
 
 import java.util.List;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -53,6 +53,7 @@ public class ListEntryAdapter extends BaseAdapter {
 		return position;
 	}
 
+
 	public View getView(int position, View convertView, ViewGroup parent) 
 	{
 		View vi=convertView;
@@ -61,14 +62,25 @@ public class ListEntryAdapter extends BaseAdapter {
 		if(convertView==null)
 			vi = inflater.inflate(R.layout.list_row, null);
 
-		TextView tvCaseTitle = (TextView)vi.findViewById(R.id.tv_list_case_title); // title
-		ImageView thumb_image=(ImageView)vi.findViewById(R.id.icon_image); // thumb image
-		TextView tvCreatedDate = (TextView)vi.findViewById(R.id.tv_list_created_date); // job name
-		
-		
+		TextView tvCaseTitle = (TextView)vi.findViewById(R.id.tv_list_case_title); // case title
+		TextView tvCreatedDate = (TextView)vi.findViewById(R.id.tv_list_created_date); // created date
+				
 		tvCaseTitle.setText(Main.array.get(position).getTitle());	
 		tvCreatedDate.setText( parseDateTime( Main.array.get(position).getDateCreated().toStringRfc3339() ));
 
+		ImageView imStatus=(ImageView)vi.findViewById(R.id.im_status_icon); // status image
+		String status = Main.array.get(position).getStatus(); 
+		if (status.contains("EMERGENCY")) {			
+			imStatus.setImageResource(R.drawable.emergency);
+			vi.setBackgroundColor( activity.getResources().getColor(R.color.red_color) );
+		} else if (status.contains("ACTIVE")) {
+			imStatus.setImageResource(R.drawable.active);
+			vi.setBackgroundColor(activity.getResources().getColor(R.color.yellow_color) );
+		} else { 
+			imStatus.setImageResource(R.drawable.closed);
+			vi.setBackgroundColor(activity.getResources().getColor(R.color.green_color) );
+		}
+		
 		vi.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
@@ -99,6 +111,14 @@ public class ListEntryAdapter extends BaseAdapter {
 		return vi;
 	}
 	
+	/**
+    *
+    * Parses dateTime format in RFC3339 into a more human readable.
+    * 
+    * Example: converts 2014-05-31T08:51:32.590+02:00 into 2014-05-31 08:51
+	* (removing the middle "T, seconds and timezone)
+	* 
+    */
 	private String parseDateTime(String date) {
 		
 		// Parsing 2014-05-31T08:51:32.590+02:00 into 2014-05-31 08:51

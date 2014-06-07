@@ -10,7 +10,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ListView;
 import caseApi.CaseApi;
 import caseApi.CaseApi.GetAllCases;
 import caseApi.model.CaseBean;
@@ -69,31 +68,21 @@ public class CaseGetAllTask extends AsyncTask<String, Integer, Integer>{
 			g = mCaseApi.getAllCases();
 			Log.d(TAG, "g: " + g.toString());
 			c = g.execute();
-			Log.d(TAG, "c: " + c.toString());
 			Main.array = c.getItems();
 			Log.d(TAG, Main.array.toString());
-			// Checking for null pointers on the array
+			// Check incoming data for null pointers to avoid exceptions
 			for (int i = 0; i < Main.array.size(); i++) {
 				if (Main.array.get(i).getDateClosed() == null)
 					Main.array.get(i).setDateClosed(new DateTime(new Date(), TimeZone.getTimeZone("UTC")));
 				if (Main.array.get(i).getDateCreated() == null)
 					Main.array.get(i).setDateCreated(new DateTime(new Date(), TimeZone.getTimeZone("UTC")));
+				if (Main.array.get(i).getStatus() == null)
+					Main.array.get(i).setStatus("CLOSED");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Insert insert;
-		//		int lastStatusCode = 0;
-		//		try {
-		//			 insert = mCase.get(name)user().insert(mUser);
-		//			 mReturnUser = insert.execute();		
-		//			 lastStatusCode = insert.getLastStatusCode();
-		//			 Log.d(TAG, "Status code: " + String.valueOf(lastStatusCode) +" " + insert.getLastStatusMessage());
-		//			 Log.d(TAG, "Json content: " + insert.getJsonContent().toString());
-		//		} catch (IOException e) {			
-		//			Log.d(TAG, e.toString());
-		//		}
 
 		publishProgress( 100 );
 		//return lastStatusCode;

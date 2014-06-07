@@ -16,7 +16,7 @@
         android:layout_marginRight="5dip" >
 
         <ImageView
-            android:id="@+id/icon_image"
+            android:id="@+id/im_status_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:contentDescription="@string/desc"
@@ -34,7 +34,7 @@
         android:layout_alignLeft="@+id/tv_list_created_date"
         android:layout_alignTop="@+id/thumbnail"
         android:text="Case title"
-        android:textColor="@color/text_red"
+        android:textColor="@color/text"
         android:textSize="20sp" />
 
     <TextView

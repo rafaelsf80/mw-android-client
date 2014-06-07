@@ -1,9 +1,6 @@
 package es.rafaelsf80.apps.semobiletraining;
 
-import java.util.Date;
-
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import caseApi.model.CaseBean;
 
@@ -25,14 +23,13 @@ public class CaseDetails extends Activity {
 
 	private CaseBean bean;
 
-	TextView tvCaseTitle, tvCaseOwner, tvCreatedDate, tvComments;
+	LinearLayout llMain;
+	TextView tvCaseTitle, tvCaseOwner, tvCreatedDate, tvComments, tvStatus;
 	EditText etClosedDate;
 	Button btUpdateCase;
 	
 	Handler mHandler;
-	
-	private DatePickerDialog mDatePicker;
-	
+
 	public interface ICaseDetails {
     	void updateClick(CaseBean bean);
     }
@@ -52,19 +49,23 @@ public class CaseDetails extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.case_details);
 		Log.d(TAG, "onCreate()");
-
+		
 		Intent i = getIntent();
 		bean = new CaseBean();
+		bean.setId( i.getLongExtra("CASEBEAN_ID", 0));
 		bean.setTitle( i.getStringExtra("CASEBEAN_TITLE"));
 		bean.setOwner( i.getStringExtra("CASEBEAN_OWNER"));
 		bean.setDateCreated( new DateTime(i.getStringExtra("CASEBEAN_CREATED")) );
 		bean.setDateClosed( new DateTime(i.getStringExtra("CASEBEAN_CLOSED")) );
+		bean.setStatus(i.getStringExtra("CASEBEAN_STATUS"));
 		bean.setComments(i.getStringExtra("CASEBEAN_COMMENTS"));
+		
 
 		tvCaseTitle = (TextView) findViewById(R.id.tv_case_title);
 		tvCaseOwner = (TextView) findViewById(R.id.tv_owner);
 		tvCreatedDate = (TextView) findViewById(R.id.tv_created_date);
 		etClosedDate = (EditText) findViewById(R.id.tv_closed_date);
+		tvStatus = (TextView) findViewById(R.id.tv_status);
 		tvComments = (TextView) findViewById(R.id.tv_comments);
 
 		btUpdateCase = (Button) findViewById(R.id.bt_update_case);
@@ -75,7 +76,18 @@ public class CaseDetails extends Activity {
 		// Parse Date and Time to show it in a more human readable format
 		tvCreatedDate.setText(parseDateTime(bean.getDateCreated().toStringRfc3339()));
 		etClosedDate.setText(parseDateTime(bean.getDateClosed().toStringRfc3339()));
-
+		
+		// Case status, change background color of the layout accordingly
+		String status = bean.getStatus();		
+		tvStatus.setText( status );
+		llMain = (LinearLayout)findViewById(R.id.ll_case_details);
+		if (status.contains("EMERGENCY"))		
+			llMain.setBackgroundColor( getResources().getColor(R.color.red_color) );
+		else if (status.contains("ACTIVE")) 
+			llMain.setBackgroundColor( getResources().getColor(R.color.yellow_color) );
+		else 
+			llMain.setBackgroundColor( getResources().getColor(R.color.green_color) );
+		
 		// Case comments
 		tvComments.setText(bean.getComments());
 
@@ -115,6 +127,14 @@ public class CaseDetails extends Activity {
 		});		
 	}
 
+	/**
+    *
+    * Parses dateTime format in RFC3339 into a more human readable.
+    * 
+    * Example: converts 2014-05-31T08:51:32.590+02:00 into 2014-05-31 08:51
+	* (removing the middle "T, seconds and timezone)
+	* 
+    */
 	private String parseDateTime(String date) {
 		
 		// Parsing 2014-05-31T08:51:32.590+02:00 into 2014-05-31 08:51
