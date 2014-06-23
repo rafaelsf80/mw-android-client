@@ -1,4 +1,4 @@
-package com.google.mw.android.app;
+package com.google.mw.android.app.gcm;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -10,6 +10,9 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.mw.android.app.Main;
+import com.google.mw.android.app.R;
+import com.google.mw.android.app.R.drawable;
 
 /**
  * This {@code IntentService} does the actual handling of the GCM message.
@@ -39,8 +42,20 @@ public class GcmIntentService extends IntentService {
 
 		String message = intent.getStringExtra("Foundry");
 		Log.i(TAG, "Received: " + message);
-
-		if (!extras.isEmpty() && (message != null)) {  
+		
+		// Filter ownerName "Rafa;hola" (brackets are part of the string)
+		String ownerName = "";
+		
+		int separator = 0;
+		if (message != null)
+			separator = message.indexOf(";");
+		if ((separator > 0) && (message != null)) {
+			ownerName = message.substring(1, separator);
+			message = message.substring(separator+1);
+			Log.i(TAG, "Ownername: " + ownerName + " Message: " + message);
+		}
+		
+		if (!extras.isEmpty() && (message != null) && (ownerName.compareTo(Main.Owner) == 0)) {  
 			/*
 			 * Filter messages based on message type. Since it is likely that GCM will be
 			 * extended in the future with new message types, just ignore any message types you're
