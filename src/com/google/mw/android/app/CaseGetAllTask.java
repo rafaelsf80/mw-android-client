@@ -17,12 +17,10 @@ import com.google.mw.backend.caseApi.model.CaseBean;
 import com.google.mw.backend.caseApi.model.CaseBeanCollection;
 
 
-public class CaseGetAllTask extends AsyncTask<String, Integer, Integer>{
+public class CaseGetAllTask extends AsyncTask<Void, Integer, Integer>{
 
 	ProgressDialog pd = null;
 	private final String TAG = getClass().getSimpleName();
-
-	private String givenName, familyName, password, segment;
 
 	private Context mContext;
 	private CaseApi mCaseApi;
@@ -52,13 +50,9 @@ public class CaseGetAllTask extends AsyncTask<String, Integer, Integer>{
 	}
 
 	@Override
-	protected Integer doInBackground(String... params) {
+	protected Integer doInBackground(Void... params) {
 
-		givenName = params[0];	
-		familyName = params[1];
-		password = params[2];
-		segment = params[3];
-		Log.d(TAG, "Registering: " + givenName + " " + familyName + " " + password + " " + segment);
+		Log.d(TAG, "doInBackground");
 
 		publishProgress( 25 );
 
@@ -95,7 +89,7 @@ public class CaseGetAllTask extends AsyncTask<String, Integer, Integer>{
 
 		publishProgress( 100 );
 		//return lastStatusCode;
-		return 1;
+		return null;
 	}
 
 	@Override

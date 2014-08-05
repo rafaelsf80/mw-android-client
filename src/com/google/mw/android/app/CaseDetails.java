@@ -2,12 +2,14 @@ package com.google.mw.android.app;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +18,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.api.client.util.DateTime;
 import com.google.mw.backend.caseApi.model.CaseBean;
 
@@ -28,12 +36,13 @@ public class CaseDetails extends Activity {
 	LinearLayout llMain;
 	TextView tvCaseTitle, tvCaseOwner, tvCreatedDate, tvStatus;
 	EditText etClosedDate, etComments;
-	Button btUpdateCase;
+	Button btShowMap, btUpdateCase;
 	
 	Handler mHandler;
 
 	public interface ICaseDetails {
     	void updateClick(CaseBean bean);
+    	void showMap(CaseBean bean);
     }
 
 	private static ICaseDetails mICaseDetails;
@@ -73,6 +82,7 @@ public class CaseDetails extends Activity {
 		etComments = (EditText) findViewById(R.id.tv_comments);
 
 		btUpdateCase = (Button) findViewById(R.id.bt_update_case);
+		btShowMap = (Button) findViewById(R.id.bt_show_map);
 
 		tvCaseTitle.setText(bean.getTitle());
 		tvCaseOwner.setText(bean.getOwner());
@@ -84,7 +94,7 @@ public class CaseDetails extends Activity {
 		// Case status, change background color of the layout accordingly
 		String status = bean.getStatus();		
 		tvStatus.setText( status );
-		llMain = (LinearLayout)findViewById(R.id.ll_case_details);
+		llMain = (LinearLayout)findViewById(R.id.case_details_layout);
 		if (status.contains("EMERGENCY"))		
 			llMain.setBackgroundColor( getResources().getColor(R.color.red_color) );
 		else if (status.contains("ACTIVE")) 
@@ -94,6 +104,9 @@ public class CaseDetails extends Activity {
 		
 		// Case comments
 		etComments.setText(bean.getComments());
+		
+		
+
 
 		mHandler = new Handler(new Callback() {
 			
@@ -118,6 +131,15 @@ public class CaseDetails extends Activity {
 				dateTimePickerDialog.show();
 			}
 		});
+		
+		btShowMap.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (mICaseDetails != null) 		
+					mICaseDetails.showMap(bean);				
+			}
+		});	
 
 		btUpdateCase.setOnClickListener(new OnClickListener() {
 

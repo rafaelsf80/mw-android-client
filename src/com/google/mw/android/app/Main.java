@@ -49,7 +49,6 @@ public class Main extends Activity {
 	// Widgets
 	private ImageView imGoogleLogo;
 	//private EditText etFirstName, etLastName, etPassword;
-	private String firstName = "", lastName = "", segment = "", password = "";
 	String[] folderId;
 	String[] folderTitle;
     private TextView tvStatusConnect;
@@ -163,7 +162,7 @@ public class Main extends Activity {
  			}
  		});
  		
- 		 /* Listener to launch UpdateCaseTask */
+ 		 /* Listener to launch UpdateCaseTask and CaseMap activity */
  		CaseDetails.regListener(new ICaseDetails() {
 	
 			@Override
@@ -173,9 +172,20 @@ public class Main extends Activity {
 				task.setService( mCaseApi );
 				task.setContext( mContext );
 				task.setData(bean);
-				task.execute( new String[]{firstName, lastName, password, segment} );	 					
+				task.execute();	 					
  			}
- 		});
+
+			@Override
+			public void showMap(CaseBean bean) {
+				Intent i = new Intent(Main.this, CaseMap.class);
+ 				i.putExtra("CASEBEAN_LATITUDE", bean.getLatitude());
+ 				i.putExtra("CASEBEAN_LONGITUDE", bean.getLongitude());
+ 				i.putExtra("CASEBEAN_OWNER", bean.getOwner());
+				i.putExtra("CASEBEAN_TITLE", bean.getTitle());
+				i.putExtra("CASEBEAN_COMMENTS", bean.getComments());	
+				startActivity(i);						
+			}
+ 		}); 
     }
     
     @Override
@@ -188,7 +198,7 @@ public class Main extends Activity {
 		task.setContext( mContext );
 		task.setListAdapter(listadapter);
 		task.setService( mCaseApi );
-		task.execute( new String[]{firstName, lastName, password, segment} );	
+		task.execute();	
     }
  
     private void defaultCases() {

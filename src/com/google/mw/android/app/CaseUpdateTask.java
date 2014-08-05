@@ -11,7 +11,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 
-public class CaseUpdateTask extends AsyncTask<String, Integer, Integer>{
+public class CaseUpdateTask extends AsyncTask<Void, Integer, Integer>{
 	
 	ProgressDialog pd = null;
 	private final String TAG = getClass().getSimpleName();
@@ -19,11 +19,8 @@ public class CaseUpdateTask extends AsyncTask<String, Integer, Integer>{
 	private Context mContext;
 	private CaseApi mCaseApi;
 	private CaseBean mBean;
-	
-	private String givenName, familyName, password, segment;
 
-	  
-    public void setContext(Context ctx) {
+	public void setContext(Context ctx) {
 		mContext = ctx;
 	}
 
@@ -47,13 +44,9 @@ public class CaseUpdateTask extends AsyncTask<String, Integer, Integer>{
 	}
 
 	@Override
-	protected Integer doInBackground(String... params) {
+	protected Integer doInBackground(Void... params) {
 
-		givenName = params[0];	
-		familyName = params[1];
-		password = params[2];
-		segment = params[3];
-		Log.d(TAG, "Registering: " + givenName + " " + familyName + " " + password + " " + segment);
+		Log.d(TAG, "doInBackground");
 
 		publishProgress( 25 );
 
@@ -69,7 +62,7 @@ public class CaseUpdateTask extends AsyncTask<String, Integer, Integer>{
 		
 		publishProgress( 100 );
 		//return lastStatusCode;
-		return 1;
+		return null;
 	}
 
 	@Override
