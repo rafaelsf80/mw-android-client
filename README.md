@@ -17,27 +17,17 @@ For endpoints reference, refer to
 
 Client libraries must be used for proper compilation. The following libraries must be included:
 
-google-api-client-1.17.0-rc.jar
-
-google-api-client-android-1.17.0-rc.jar
-
-google-http-client-1.17.0-rc.jar
-
-google-http-client-android-1.17.0-rc.jar
-
-google-http-client-gson-1.17.0-rc.jar
-
-google-oauth-client-1.17.0-rc.jar
-
-gson-2.1.jar
-
-jsr305-1.3.9.jar
-
-volley.jar
-
-gcm.jar
-
-google-play-services.jar
+* google-api-client-1.17.0-rc.jar
+* google-api-client-android-1.17.0-rc.jar
+* google-http-client-1.17.0-rc.jar
+* google-http-client-android-1.17.0-rc.jar
+* google-http-client-gson-1.17.0-rc.jar
+* google-oauth-client-1.17.0-rc.jar
+* gson-2.1.jar
+* jsr305-1.3.9.jar
+* volley.jar
+* gcm.jar
+* google-play-services.jar
 
 
 ## Android release
@@ -48,4 +38,16 @@ Compiled with SDK 4.4 and tested on Nexus4, Nexus5, Nexus7
 
 ## Screenshots
 
-Pending
+Main activity:
+![image alt text](images/main.png)
+
+CaseDetails activity, showing all the fields of the case:
+![image alt text](images/case_details.png)
+
+CaseMap activity:
+![image alt text](images/case_map.png)
+
+
+ain activity:
+
+ain activity:
